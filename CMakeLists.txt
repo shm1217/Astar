@@ -56,7 +56,8 @@ endif()
 add_executable(cmd_publisher_node
         src/cmd_publisher_node.cpp
         src/cmd_publisher.cpp
-        src/map.cpp)
+        src/map.cpp
+        src/pathfinder.cpp)
 ament_target_dependencies(cmd_publisher_node ${ROS2_PACKAGES})
 install(TARGETS cmd_publisher_node
         DESTINATION lib/${PROJECT_NAME})
