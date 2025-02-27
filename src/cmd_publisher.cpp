@@ -119,7 +119,6 @@ void CmdPublisher::timer_cmd_callback()
             int y_idx = static_cast<int>(closest_obstacle.y() / cell_size); // 그리드 y 인덱스
             grid_obstacles.insert({ x_idx, y_idx });
 
-            // RCLCPP_INFO_STREAM(this->get_logger(), "Distance to obstacle: " << std::to_string(distance) << ", Closest obstacle: " << closest_obstacle);
             float obstacle_distance = std::sqrt(std::pow(closest_obstacle.x() - a, 2) +
                                                 std::pow(closest_obstacle.y() - b, 2));
             if (obstacle_distance <= 0.2) // 반경 0.3m 이내에 장애물 존재
@@ -127,9 +126,6 @@ void CmdPublisher::timer_cmd_callback()
                 RCLCPP_INFO_STREAM(this->get_logger(), "closest obstacle: " << closest_obstacle << ", 마커의 좌표: (" << a << "," << b << ")");
                 green_obstacles.insert({ a, b }); // 초록색으로 변한 위치 저장
             }
-
-            // if (closest_obstacle.x() == a && closest_obstacle.y() == b)
-
             // 만약 이전에 초록색으로 변한 위치라면 계속 초록색 유지
             if (green_obstacles.count({ a, b }) > 0)
             {
@@ -174,15 +170,6 @@ void CmdPublisher::moverobot()
     int goal_y_idx = static_cast<int>(goal_y / cell_size);
 
     std::vector<PathNode> path = FindPath(grid, PathNode(start_x_idx, start_y_idx), PathNode(goal_x_idx, goal_y_idx));
-
-    /*for (const auto &row : grid)
-    {
-        for (int cell : row)
-        {
-            std::cout << cell << " ";
-        }
-        std::cout << std::endl;
-    }*/
 
     if (path.empty())
     {
